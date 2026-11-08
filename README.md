@@ -19,8 +19,6 @@
 - **Live Render API:** [https://bdf-lab-3-opt5.onrender.com/books](https://bdf-lab-3-opt5.onrender.com/books)
 - **Live Render Dashboard:** [https://bdf-lab-3-opt5.onrender.com/](https://bdf-lab-3-opt5.onrender.com/)
 
-- **Localhost API Endpoint:** [http://localhost:3000/books](http://localhost:3000/books)
-
 ## Project Description
 
 This project implements RESTful API operations using Node.js, Express.js, and SQLite. It provides endpoints to create, retrieve, update, and delete book records.
