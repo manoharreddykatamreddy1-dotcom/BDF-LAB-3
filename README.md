@@ -21,8 +21,6 @@ Your application is deployed and live on Render Cloud:
 - **Live Public REST API Endpoint:** [https://bdf-lab-3-opt5.onrender.com/books](https://bdf-lab-3-opt5.onrender.com/books)
 - **Live Interactive Web Dashboard & Tester:** [https://bdf-lab-3-opt5.onrender.com/](https://bdf-lab-3-opt5.onrender.com/)
 - **Live Health Check:** [https://bdf-lab-3-opt5.onrender.com/healthz](https://bdf-lab-3-opt5.onrender.com/healthz)
-- **Localhost API Endpoint (when running locally):** [http://localhost:3000/books](http://localhost:3000/books)
-- **Localhost Interactive Dashboard:** [http://localhost:3000/](http://localhost:3000/)
 
 ---
 
