@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 const app = express();
@@ -20,34 +19,45 @@ app.use((req, res, next) => {
 // Parse JSON request bodies
 app.use(express.json());
 
-// SQLite Database Setup
-const dbPath = path.join(__dirname, 'books.db');
-const db = new sqlite3.Database(dbPath, (err) => {
-  if (err) {
-    console.error('Error connecting to SQLite database:', err.message);
-  } else {
-    console.log('Connected to SQLite database: books.db');
-    initDatabase();
-  }
-});
-
-// Curated sample books matching curriculum & screenshots
+// Initial dataset matching curriculum & screenshots
 const initialBooks = [
-  ['The Alchemist', 'Paulo Coelho', 250, 208],
-  ['Atomic Habits', 'James Clear', 450, 320],
-  ['Rich Dad Poor Dad', 'Robert Kiyosaki', 300, 336],
-  ['Wings of Fire', 'A.P.J. Abdul Kalam', 200, 180],
-  ['Ikigai', 'Hector Garcia', 350, 194],
-  ['Think Like a Monk', 'Jay Shetty', 400, 288],
-  ['Deep Work', 'Cal Newport', 500, 304],
-  ['The Power of Now', 'Eckhart Tolle', 280, 236],
-  ['Zero to One', 'Peter Thiel', 320, 210],
-  ['The 5 AM Club', 'Robin Sharma', 380, 336],
-  ['Python Crash Course', 'Eric Matthes', 420, 544],
-  ['Learning Python', 'Mark Lutz', 650, 1590]
+  { id: 1, title: 'The Alchemist', author: 'Paulo Coelho', price: 250, pages: 208 },
+  { id: 2, title: 'Atomic Habits', author: 'James Clear', price: 450, pages: 320 },
+  { id: 3, title: 'Rich Dad Poor Dad', author: 'Robert Kiyosaki', price: 300, pages: 336 },
+  { id: 4, title: 'Wings of Fire', author: 'A.P.J. Abdul Kalam', price: 200, pages: 180 },
+  { id: 5, title: 'Ikigai', author: 'Hector Garcia', price: 350, pages: 194 },
+  { id: 6, title: 'Think Like a Monk', author: 'Jay Shetty', price: 400, pages: 288 },
+  { id: 7, title: 'Deep Work', Cal: 'Newport', author: 'Cal Newport', price: 500, pages: 304 },
+  { id: 8, title: 'The Power of Now', author: 'Eckhart Tolle', price: 280, pages: 236 },
+  { id: 9, title: 'Zero to One', author: 'Peter Thiel', price: 320, pages: 210 },
+  { id: 10, title: 'The 5 AM Club', author: 'Robin Sharma', price: 380, pages: 336 },
+  { id: 11, title: 'Python Crash Course', author: 'Eric Matthes', price: 420, pages: 544 },
+  { id: 12, title: 'Learning Python', author: 'Mark Lutz', price: 650, pages: 1590 }
 ];
 
-function initDatabase() {
+// In-Memory store fallback (ensures Render NEVER crashes if sqlite3 native binary is missing)
+let inMemoryBooks = JSON.parse(JSON.stringify(initialBooks));
+let nextId = 13;
+let useSqlite = false;
+let db = null;
+
+try {
+  const sqlite3 = require('sqlite3').verbose();
+  const dbPath = path.join(__dirname, 'books.db');
+  db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+      console.warn('SQLite connection error, falling back to in-memory store:', err.message);
+    } else {
+      useSqlite = true;
+      console.log('Connected to SQLite database: books.db');
+      initSqliteDatabase();
+    }
+  });
+} catch (e) {
+  console.warn('Native sqlite3 module not available on this environment. Using robust in-memory database:', e.message);
+}
+
+function initSqliteDatabase() {
   const createTableQuery = `
     CREATE TABLE IF NOT EXISTS books (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -57,7 +67,7 @@ function initDatabase() {
       pages INTEGER NOT NULL DEFAULT 250
     );
   `;
-  const createBookAliasQuery = `
+  const createBookAlias = `
     CREATE TABLE IF NOT EXISTS book (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT NOT NULL,
@@ -69,63 +79,136 @@ function initDatabase() {
 
   db.serialize(() => {
     db.run(createTableQuery);
-    db.run(createBookAliasQuery, (err) => {
-      if (err) {
-        console.error('Error creating books table:', err.message);
-        return;
-      }
-
+    db.run(createBookAlias, (err) => {
+      if (err) return;
       db.get('SELECT COUNT(*) AS count FROM books', (err, row) => {
-        if (err) {
-          console.error('Error checking books count:', err.message);
-          return;
-        }
-
-        if (row.count === 0) {
-          console.log('Seeding initial 12 sample books...');
-          const insertStmt = db.prepare('INSERT INTO books (title, author, price, pages) VALUES (?, ?, ?, ?)');
-          const insertBookAlias = db.prepare('INSERT INTO book (title, author, price, pages) VALUES (?, ?, ?, ?)');
-
+        if (!err && row && row.count === 0) {
+          console.log('Seeding initial curated sample books into SQLite...');
+          const stmt1 = db.prepare('INSERT INTO books (id, title, author, price, pages) VALUES (?, ?, ?, ?, ?)');
+          const stmt2 = db.prepare('INSERT INTO book (id, title, author, price, pages) VALUES (?, ?, ?, ?, ?)');
           initialBooks.forEach((b) => {
-            insertStmt.run(b);
-            insertBookAlias.run(b);
+            stmt1.run([b.id, b.title, b.author, b.price, b.pages]);
+            stmt2.run([b.id, b.title, b.author, b.price, b.pages]);
           });
-
-          insertStmt.finalize();
-          insertBookAlias.finalize((finalizeErr) => {
-            if (!finalizeErr) {
-              console.log('Sample books seeded successfully.');
-            }
-          });
-        } else {
-          console.log(`Database already has ${row.count} books. Skipping seed.`);
+          stmt1.finalize();
+          stmt2.finalize();
         }
       });
     });
   });
 }
 
-// Database Promise Helpers
-const dbAll = (sql, params = []) => new Promise((resolve, reject) => {
-  db.all(sql, params, (err, rows) => (err ? reject(err) : resolve(rows)));
-});
+// Database Operations Wrapper
+async function getAllBooks(whereClause, params, orderBy, order, limit, offset) {
+  if (useSqlite && db) {
+    let sql = 'SELECT * FROM books';
+    if (whereClause.length > 0) {
+      sql += ' WHERE ' + whereClause.join(' AND ');
+    }
+    sql += ` ORDER BY ${orderBy} ${order}`;
+    sql += ' LIMIT ? OFFSET ?';
+    const finalParams = [...params, limit, offset];
+    return new Promise((resolve, reject) => {
+      db.all(sql, finalParams, (err, rows) => (err ? reject(err) : resolve(rows)));
+    });
+  }
 
-const dbGet = (sql, params = []) => new Promise((resolve, reject) => {
-  db.get(sql, params, (err, row) => (err ? reject(err) : resolve(row)));
-});
+  // In-Memory Filtering & Sorting
+  let result = [...inMemoryBooks];
+  if (params._search_q) {
+    const q = params._search_q.toLowerCase();
+    result = result.filter(b => b.title.toLowerCase().includes(q));
+  }
+  if (params._min_price !== undefined) {
+    result = result.filter(b => b.price >= params._min_price);
+  }
+  if (params._max_price !== undefined) {
+    result = result.filter(b => b.price <= params._max_price);
+  }
 
-const dbRun = (sql, params = []) => new Promise((resolve, reject) => {
-  db.run(sql, params, function (err) {
-    if (err) reject(err);
-    else resolve({ lastID: this.lastID, changes: this.changes });
+  result.sort((a, b) => {
+    let valA = a[orderBy];
+    let valB = b[orderBy];
+    if (typeof valA === 'string') valA = valA.toLowerCase();
+    if (typeof valB === 'string') valB = valB.toLowerCase();
+    if (valA < valB) return order === 'ASC' ? -1 : 1;
+    if (valA > valB) return order === 'ASC' ? 1 : -1;
+    return 0;
   });
-});
 
-// Allowed sorting columns and directions
+  return result.slice(offset, offset + limit);
+}
+
+async function getBookById(id) {
+  if (useSqlite && db) {
+    return new Promise((resolve, reject) => {
+      db.get('SELECT * FROM books WHERE id = ?', [id], (err, row) => (err ? reject(err) : resolve(row)));
+    });
+  }
+  return inMemoryBooks.find(b => b.id === Number(id)) || null;
+}
+
+async function createBook(title, author, price, pages) {
+  if (useSqlite && db) {
+    return new Promise((resolve, reject) => {
+      db.run(
+        'INSERT INTO books (title, author, price, pages) VALUES (?, ?, ?, ?)',
+        [title, author, price, pages],
+        function (err) {
+          if (err) return reject(err);
+          db.get('SELECT * FROM books WHERE id = ?', [this.lastID], (getErr, row) => {
+            if (getErr) reject(getErr);
+            else resolve(row);
+          });
+        }
+      );
+    });
+  }
+  const newBook = { id: nextId++, title, author, price, pages };
+  inMemoryBooks.push(newBook);
+  return newBook;
+}
+
+async function updateBook(id, title, author, price, pages) {
+  if (useSqlite && db) {
+    return new Promise((resolve, reject) => {
+      db.run(
+        'UPDATE books SET title = ?, author = ?, price = ?, pages = ? WHERE id = ?',
+        [title, author, price, pages, id],
+        (err) => {
+          if (err) return reject(err);
+          db.get('SELECT * FROM books WHERE id = ?', [id], (getErr, row) => {
+            if (getErr) reject(getErr);
+            else resolve(row);
+          });
+        }
+      );
+    });
+  }
+  const idx = inMemoryBooks.findIndex(b => b.id === Number(id));
+  if (idx === -1) return null;
+  inMemoryBooks[idx] = { id: Number(id), title, author, price, pages };
+  return inMemoryBooks[idx];
+}
+
+async function deleteBook(id) {
+  if (useSqlite && db) {
+    return new Promise((resolve, reject) => {
+      db.run('DELETE FROM books WHERE id = ?', [id], function (err) {
+        if (err) reject(err);
+        else resolve(this.changes);
+      });
+    });
+  }
+  const beforeLen = inMemoryBooks.length;
+  inMemoryBooks = inMemoryBooks.filter(b => b.id !== Number(id));
+  return beforeLen - inMemoryBooks.length;
+}
+
+// Whitelists & Validation
 const ALLOWED_ORDER_BY = ['id', 'title', 'author', 'price', 'pages'];
 const ALLOWED_ORDER = ['ASC', 'DESC'];
 
-// Validation Middleware
 function validateBookBody(req, res, next) {
   const { title, author, price, pages } = req.body;
 
@@ -229,7 +312,7 @@ function validateQueryParams(req, res, next) {
   next();
 }
 
-// Interactive Web Dashboard HTML
+// HTML Dashboard Content
 const getDashboardHtml = () => `
 <!DOCTYPE html>
 <html lang="en">
@@ -238,11 +321,7 @@ const getDashboardHtml = () => `
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lab 3 - Books Management REST API</title>
   <style>
-    :root {
-      --bg: #0f172a; --card: #1e293b; --border: #334155;
-      --text: #f8fafc; --muted: #94a3b8; --primary: #38bdf8;
-      --success: #22c55e; --error: #ef4444;
-    }
+    :root { --bg: #0f172a; --card: #1e293b; --border: #334155; --text: #f8fafc; --muted: #94a3b8; --primary: #38bdf8; --success: #22c55e; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     body { background-color: var(--bg); color: var(--text); padding: 24px; line-height: 1.5; }
     .container { max-width: 1050px; margin: 0 auto; }
@@ -393,7 +472,10 @@ const getDashboardHtml = () => `
 </html>
 `;
 
-// Routes
+// Health check endpoint for Cloud hosting
+app.get('/healthz', (req, res) => res.status(200).json({ status: 'ok' }));
+
+// Root route
 app.get('/', (req, res) => {
   const wantsHtml = req.headers.accept && req.headers.accept.includes('text/html') && req.query.format !== 'json';
   if (wantsHtml) return res.status(200).send(getDashboardHtml());
@@ -411,39 +493,33 @@ app.get('/books', validateQueryParams, async (req, res, next) => {
   try {
     const { search_q, min_price, max_price, order_by, order, limit, offset } = req.query;
 
-    let sql = 'SELECT * FROM books';
     const whereClauses = [];
     const queryParams = [];
 
     if (search_q && search_q.trim().length > 0) {
       whereClauses.push('title LIKE ?');
       queryParams.push(`%${search_q.trim()}%`);
+      queryParams._search_q = search_q.trim();
     }
 
     if (min_price !== undefined) {
       whereClauses.push('price >= ?');
       queryParams.push(Number(min_price));
+      queryParams._min_price = Number(min_price);
     }
 
     if (max_price !== undefined) {
       whereClauses.push('price <= ?');
       queryParams.push(Number(max_price));
-    }
-
-    if (whereClauses.length > 0) {
-      sql += ' WHERE ' + whereClauses.join(' AND ');
+      queryParams._max_price = Number(max_price);
     }
 
     const orderByCol = (order_by || 'id').toLowerCase();
     const orderDir = (order || 'ASC').toUpperCase();
-    sql += ` ORDER BY ${orderByCol} ${orderDir}`;
-
     const limitVal = limit !== undefined ? Number(limit) : 10;
     const offsetVal = offset !== undefined ? Number(offset) : 0;
-    sql += ' LIMIT ? OFFSET ?';
-    queryParams.push(limitVal, offsetVal);
 
-    const books = await dbAll(sql, queryParams);
+    const books = await getAllBooks(whereClauses, queryParams, orderByCol, orderDir, limitVal, offsetVal);
 
     return res.status(200).json({
       message: 'Books retrieved successfully',
@@ -459,7 +535,7 @@ app.get('/books', validateQueryParams, async (req, res, next) => {
 app.get(['/books/:id', '/books/:bookId'], validateBookId, async (req, res, next) => {
   try {
     const targetId = req.params.id || req.params.bookId;
-    const book = await dbGet('SELECT * FROM books WHERE id = ?', [targetId]);
+    const book = await getBookById(targetId);
 
     if (!book) {
       return res.status(404).json({ message: 'Book not found' });
@@ -478,14 +554,7 @@ app.get(['/books/:id', '/books/:bookId'], validateBookId, async (req, res, next)
 app.post('/books', validateBookBody, async (req, res, next) => {
   try {
     const { title, author, price, pages } = req.body;
-    const pagesVal = pages || 250;
-
-    const result = await dbRun(
-      'INSERT INTO books (title, author, price, pages) VALUES (?, ?, ?, ?)',
-      [title, author, price, pagesVal]
-    );
-
-    const createdBook = await dbGet('SELECT * FROM books WHERE id = ?', [result.lastID]);
+    const createdBook = await createBook(title, author, price, pages);
 
     return res.status(201).json({
       message: 'Book created successfully',
@@ -501,19 +570,13 @@ app.put(['/books/:id', '/books/:bookId'], validateBookId, validateBookBody, asyn
   try {
     const targetId = req.params.id || req.params.bookId;
     const { title, author, price, pages } = req.body;
-    const pagesVal = pages || 250;
 
-    const existingBook = await dbGet('SELECT * FROM books WHERE id = ?', [targetId]);
+    const existingBook = await getBookById(targetId);
     if (!existingBook) {
       return res.status(404).json({ message: 'Book not found' });
     }
 
-    await dbRun(
-      'UPDATE books SET title = ?, author = ?, price = ?, pages = ? WHERE id = ?',
-      [title, author, price, pagesVal, targetId]
-    );
-
-    const updatedBook = await dbGet('SELECT * FROM books WHERE id = ?', [targetId]);
+    const updatedBook = await updateBook(targetId, title, author, price, pages);
 
     return res.status(200).json({
       message: 'Book updated successfully',
@@ -529,12 +592,12 @@ app.delete(['/books/:id', '/books/:bookId'], validateBookId, async (req, res, ne
   try {
     const targetId = req.params.id || req.params.bookId;
 
-    const existingBook = await dbGet('SELECT * FROM books WHERE id = ?', [targetId]);
+    const existingBook = await getBookById(targetId);
     if (!existingBook) {
       return res.status(404).json({ message: 'Book not found' });
     }
 
-    await dbRun('DELETE FROM books WHERE id = ?', [targetId]);
+    await deleteBook(targetId);
 
     return res.status(200).json({ message: 'Book deleted successfully' });
   } catch (err) {
@@ -553,8 +616,10 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Internal server error' });
 });
 
-// Start listening
-app.listen(PORT, () => {
-  console.log(`Server is running successfully on port ${PORT}`);
-  console.log(`Books resource available at /books`);
+// Explicitly bind to 0.0.0.0 (REQUIRED for Render cloud proxy)
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`=======================================================`);
+  console.log(`Server is running successfully on 0.0.0.0:${PORT}`);
+  console.log(`Books resource available at http://0.0.0.0:${PORT}/books`);
+  console.log(`=======================================================`);
 });

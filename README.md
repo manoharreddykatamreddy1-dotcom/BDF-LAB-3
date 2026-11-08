@@ -14,7 +14,10 @@
 
 ## Deployment URL
 
-- **Render Cloud URL:** [https://backend-lab-3-manohar.onrender.com/books](https://backend-lab-3-manohar.onrender.com/books)
+**Render URL:** https://bdf-lab-3-opt5.onrender.com/books
+
+- **Live Render API:** [https://bdf-lab-3-opt5.onrender.com/books](https://bdf-lab-3-opt5.onrender.com/books)
+- **Live Render Dashboard:** [https://bdf-lab-3-opt5.onrender.com/](https://bdf-lab-3-opt5.onrender.com/)
 - **Localhost Testing Dashboard:** [http://localhost:3000/](http://localhost:3000/)
 - **Localhost API Endpoint:** [http://localhost:3000/books](http://localhost:3000/books)
 
