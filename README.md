@@ -18,6 +18,8 @@
 
 - **Live Render API:** [https://bdf-lab-3-opt5.onrender.com/books](https://bdf-lab-3-opt5.onrender.com/books)
 - **Live Render Dashboard:** [https://bdf-lab-3-opt5.onrender.com/](https://bdf-lab-3-opt5.onrender.com/)
+- **Localhost Testing Dashboard:** [http://localhost:3000/](http://localhost:3000/)
+- **Localhost API Endpoint:** [http://localhost:3000/books](http://localhost:3000/books)
 
 ## Project Description
 
@@ -251,63 +253,46 @@ Select **Body → raw → JSON** in Postman:
 ## 📸 Screenshots Evidence
 
 ### 1. Render Cloud Deployment
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/049dbe47-2dd3-4895-bbce-07780d542a41" />
-
+![Render Deployment](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/render%20deployment.png)
 
 ### 2. GET All Books (`GET /books`)
-<img width="1920" height="1080" alt="Screenshot 2026-11-08 190750" src="https://github.com/user-attachments/assets/d1d73e6d-0557-482a-a0d5-55cc9b8de813" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6d8702f3-6318-4802-b568-3941a275c7c0" />
-
+![GET All Books](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/GET%20All%20Books.png)
 
 ### 3. GET Book by ID (`GET /books/1`)
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e8bb4931-6d15-47a7-91af-6a54d39cb4d2" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/351a1e27-a111-48d5-a39b-c79400fcdd17" />
-
+![GET Book by ID](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/GET%20Book%20by%20ID.png)
 
 ### 4. Search Books (`GET /books?search_q=The`)
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a8771d0a-f725-4a00-bedf-5add444ea90c" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9b8a8741-20f9-4c04-8962-65fab259df2b" />
-
+![Search Books](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Search%20Books.png)
 
 ### 5. Sorting Ascending (`GET /books?order_by=price&order=ASC`)
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e1173c6d-3830-4fa6-87a3-24b40bb22253" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5806b1da-358c-45c9-be9f-aa8d1b2574b1" />
-
-
+![Sorting Ascending](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Sorting%20Ascending.png)
 
 ### 6. Sorting Descending (`GET /books?order_by=price&order=DESC`)
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3c2f97e2-77e1-4a53-b0c2-f52c7135a15b" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/683c721a-208d-4f36-b0a7-b3e5ae92b968" />
+![Sorting Descending](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Sorting%20Descending.png)
 
 ### 7. Pagination (`GET /books?limit=5&offset=0`)
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/22db3b87-6ba1-472f-a680-f4b78a2e1827" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/db06ea5b-10a4-4f0d-98ec-f7f802ac3ab6" />
-
+![Pagination](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Pagination.png)
 
 ### 8. Price Filtering (`GET /books?min_price=200&max_price=350`)
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/547e9fa4-b74d-4503-8afb-282921c82ce2" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1456e19f-547a-4801-b6b0-ecb18f27d14f" />
-
+![Price Filtering](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Price%20Filtering.png)
 
 ### 9. Combined Query (`Search + Filter + Sort + Pagination`)
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3291a9df-e417-423d-adb3-19918bc905e9" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4b24b613-57b4-41ab-bf0e-056f62d2e7a5" />
-
+![Combined Query](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Combined%20Query.png)
 
 ### 10. POST Successful Request (`201 Created`)
-![POST Successful Request](screenshots/POST%20Successful%20Request.png)
+![POST Successful Request](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/POST%20Successful%20Request.png)
 
 ### 11. POST Validation Error (`400 Bad Request`)
-![POST Validation Error](screenshots/POST%20Validation%20Error.png)
+![POST Validation Error](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/POST%20Validation%20Error.png)
 
 ### 12. PUT Update Request (`200 OK`)
-![PUT Update Request](screenshots/PUT%20Update%20Request.png)
+![PUT Update Request](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/PUT%20Update%20Request.png)
 
 ### 13. DELETE Request (`200 OK`)
-![DELETE Request](screenshots/DELETE%20Request.png)
+![DELETE Request](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/DELETE%20Request.png)
 
 ### 14. Test Invalid ID and Missing Records (`404 Not Found`)
-![Test Invalid ID](screenshots/Test%20Invalid%20ID.png)
+![Test Invalid ID](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Test%20Invalid%20ID.png)
 
 ---
 
