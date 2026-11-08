@@ -17,66 +17,79 @@ const db = new sqlite3.Database(dbPath, (err) => {
 // Function to initialize tables and insert initial sample data
 function initDatabase() {
   const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS book (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      author TEXT NOT NULL,
+      price REAL NOT NULL,
+      pages INTEGER NOT NULL DEFAULT 250
+    );
+  `;
+
+  // We also create view/alias for books if needed, or table books
+  const createBooksTableQuery = `
     CREATE TABLE IF NOT EXISTS books (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       title TEXT NOT NULL,
       author TEXT NOT NULL,
-      price REAL NOT NULL
-    )
+      price REAL NOT NULL,
+      pages INTEGER NOT NULL DEFAULT 250
+    );
   `;
 
-  db.run(createTableQuery, (err) => {
-    if (err) {
-      console.error('Error creating books table:', err.message);
-      return;
-    }
-
-    // Check if sample records already exist to prevent duplicate insertions on server restart
-    db.get('SELECT COUNT(*) AS count FROM books', (err, row) => {
+  db.serialize(() => {
+    db.run(createTableQuery);
+    db.run(createBooksTableQuery, (err) => {
       if (err) {
-        console.error('Error checking books count:', err.message);
+        console.error('Error creating books table:', err.message);
         return;
       }
 
-      if (row.count === 0) {
-        console.log('No existing records found. Seeding initial 12 sample books...');
+      // Check if sample records already exist in books table
+      db.get('SELECT COUNT(*) AS count FROM books', (err, row) => {
+        if (err) {
+          console.error('Error checking books count:', err.message);
+          return;
+        }
 
-        const sampleBooks = [
-          ['The Pragmatic Programmer', 'Andrew Hunt and David Thomas', 550.0],
-          ['Clean Code: A Handbook of Agile Software Craftsmanship', 'Robert C. Martin', 480.0],
-          ['JavaScript: The Good Parts', 'Douglas Crockford', 320.0],
-          ['Learning Python', 'Mark Lutz', 650.0],
-          ['Python Crash Course', 'Eric Matthes', 420.0],
-          ['You Don\'t Know JS Yet', 'Kyle Simpson', 280.0],
-          ['Designing Data-Intensive Applications', 'Martin Kleppmann', 750.0],
-          ['Node.js Web Development', 'David Herron', 390.0],
-          ['Introduction to Algorithms', 'Thomas H. Cormen', 850.0],
-          ['Head First Design Patterns', 'Eric Freeman', 510.0],
-          ['Express in Action', 'Evan Hahn', 340.0],
-          ['Eloquent JavaScript', 'Marijn Haverbeke', 260.0]
-        ];
+        if (row.count === 0) {
+          console.log('Seeding initial curated sample books...');
 
-        const insertQuery = 'INSERT INTO books (title, author, price) VALUES (?, ?, ?)';
-        const stmt = db.prepare(insertQuery);
+          const sampleBooks = [
+            ['The Alchemist', 'Paulo Coelho', 250, 208],
+            ['Atomic Habits', 'James Clear', 450, 320],
+            ['Rich Dad Poor Dad', 'Robert Kiyosaki', 300, 336],
+            ['Wings of Fire', 'A.P.J. Abdul Kalam', 200, 180],
+            ['Ikigai', 'Hector Garcia', 350, 194],
+            ['Think Like a Monk', 'Jay Shetty', 400, 288],
+            ['Deep Work', 'Cal Newport', 500, 304],
+            ['The Power of Now', 'Eckhart Tolle', 280, 236],
+            ['Zero to One', 'Peter Thiel', 320, 210],
+            ['The 5 AM Club', 'Robin Sharma', 380, 336],
+            ['Python Crash Course', 'Eric Matthes', 420, 544],
+            ['Learning Python', 'Mark Lutz', 650, 1590]
+          ];
 
-        sampleBooks.forEach((book) => {
-          stmt.run(book, (insertErr) => {
-            if (insertErr) {
-              console.error(`Error inserting sample book "${book[0]}":`, insertErr.message);
+          const insertBook = db.prepare('INSERT INTO book (title, author, price, pages) VALUES (?, ?, ?, ?)');
+          const insertBooks = db.prepare('INSERT INTO books (title, author, price, pages) VALUES (?, ?, ?, ?)');
+
+          sampleBooks.forEach((b) => {
+            insertBook.run(b);
+            insertBooks.run(b);
+          });
+
+          insertBook.finalize();
+          insertBooks.finalize((finalizeErr) => {
+            if (finalizeErr) {
+              console.error('Error finalizing sample book insert statement:', finalizeErr.message);
+            } else {
+              console.log('Sample books successfully seeded into the database.');
             }
           });
-        });
-
-        stmt.finalize((finalizeErr) => {
-          if (finalizeErr) {
-            console.error('Error finalizing sample book insert statement:', finalizeErr.message);
-          } else {
-            console.log('Sample books successfully seeded into the database.');
-          }
-        });
-      } else {
-        console.log(`Database already initialized with ${row.count} books. Skipping seed.`);
-      }
+        } else {
+          console.log(`Database already initialized with ${row.count} books. Skipping seed.`);
+        }
+      });
     });
   });
 }
