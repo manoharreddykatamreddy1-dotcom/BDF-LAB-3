@@ -255,28 +255,44 @@ Select **Body → raw → JSON** in Postman:
 
 
 ### 2. GET All Books (`GET /books`)
-![GET All Books](screenshots/GET%20All%20Books.png)
+<img width="1920" height="1080" alt="Screenshot 2026-11-08 190750" src="https://github.com/user-attachments/assets/d1d73e6d-0557-482a-a0d5-55cc9b8de813" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6d8702f3-6318-4802-b568-3941a275c7c0" />
+
 
 ### 3. GET Book by ID (`GET /books/1`)
-![GET Book by ID](screenshots/GET%20Book%20by%20ID.png)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e8bb4931-6d15-47a7-91af-6a54d39cb4d2" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/351a1e27-a111-48d5-a39b-c79400fcdd17" />
+
 
 ### 4. Search Books (`GET /books?search_q=The`)
-![Search Books](screenshots/Search%20Books.png)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a8771d0a-f725-4a00-bedf-5add444ea90c" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/9b8a8741-20f9-4c04-8962-65fab259df2b" />
+
 
 ### 5. Sorting Ascending (`GET /books?order_by=price&order=ASC`)
-![Sorting Ascending](screenshots/Sorting%20Ascending.png)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/e1173c6d-3830-4fa6-87a3-24b40bb22253" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5806b1da-358c-45c9-be9f-aa8d1b2574b1" />
+
+
 
 ### 6. Sorting Descending (`GET /books?order_by=price&order=DESC`)
-![Sorting Descending](screenshots/Sorting%20Descending.png)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3c2f97e2-77e1-4a53-b0c2-f52c7135a15b" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/683c721a-208d-4f36-b0a7-b3e5ae92b968" />
 
 ### 7. Pagination (`GET /books?limit=5&offset=0`)
-![Pagination](screenshots/Pagination.png)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/22db3b87-6ba1-472f-a680-f4b78a2e1827" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/db06ea5b-10a4-4f0d-98ec-f7f802ac3ab6" />
+
 
 ### 8. Price Filtering (`GET /books?min_price=200&max_price=350`)
-![Price Filtering](screenshots/Price%20Filtering.png)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/547e9fa4-b74d-4503-8afb-282921c82ce2" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/1456e19f-547a-4801-b6b0-ecb18f27d14f" />
+
 
 ### 9. Combined Query (`Search + Filter + Sort + Pagination`)
-![Combined Query](screenshots/Combined%20Query.png)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3291a9df-e417-423d-adb3-19918bc905e9" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4b24b613-57b4-41ab-bf0e-056f62d2e7a5" />
+
 
 ### 10. POST Successful Request (`201 Created`)
 ![POST Successful Request](screenshots/POST%20Successful%20Request.png)
