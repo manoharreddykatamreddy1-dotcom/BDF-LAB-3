@@ -17,11 +17,12 @@
 ## Live Deployment Links
 
 Your application is deployed and live on Render Cloud:
-- ** RESPIRATORY LINK: https://github.com/manoharreddykatamreddy1-dotcom/BDF-LAB-3
+
 - **Live Public REST API Endpoint:** [https://bdf-lab-3-opt5.onrender.com/books](https://bdf-lab-3-opt5.onrender.com/books)
 - **Live Interactive Web Dashboard & Tester:** [https://bdf-lab-3-opt5.onrender.com/](https://bdf-lab-3-opt5.onrender.com/)
 - **Live Health Check:** [https://bdf-lab-3-opt5.onrender.com/healthz](https://bdf-lab-3-opt5.onrender.com/healthz)
-
+- **Localhost API Endpoint (when running locally):** [http://localhost:3000/books](http://localhost:3000/books)
+- **Localhost Interactive Dashboard:** [http://localhost:3000/](http://localhost:3000/)
 
 ---
 
@@ -166,8 +167,6 @@ The initial database contains 10 core book records matching the curriculum requi
     ]
   }
   ```
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/bef8fdb6-5acc-4d94-a854-6f9e9c990c99" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/bf6a8b2a-1530-4740-b388-012a3019739d" />
 
 ---
 
@@ -187,8 +186,6 @@ The initial database contains 10 core book records matching the curriculum requi
     }
   }
   ```
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/517a2105-adaa-4785-bbab-5cff125b127e" />
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/5454c709-83a5-4764-aa1e-8c13751658da" />
 
 ---
 
@@ -292,7 +289,6 @@ The initial database contains 10 core book records matching the curriculum requi
     "message": "Book not found"
   }
   ```
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/0b235346-3c43-4d46-8c67-9545058635e1" />
 
 ---
 
