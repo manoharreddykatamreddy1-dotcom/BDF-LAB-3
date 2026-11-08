@@ -1,0 +1,400 @@
+{
+  "info": {
+    "name": "BDF Lab 3 - Books REST API (K. Manohar Reddy - 252U1R5069)",
+    "description": "Complete Postman Test Suite for Lab 3: REST API, Query Parameters, Validation, and Debugging.\nStudent: K. Manohar Reddy\nReg No: 252U1R5069\nSection: AIDE 2A 106\nFaculty: Siva Sai Teja",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Success Cases (Status 200 & 201)",
+      "item": [
+        {
+          "name": "1. Get All Books",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"]
+            }
+          }
+        },
+        {
+          "name": "2. Get Single Book by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books", "1"]
+            }
+          }
+        },
+        {
+          "name": "3. Search Books (search_q=python)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books?search_q=python",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"],
+              "query": [
+                { "key": "search_q", "value": "python" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "4. Sort Books Ascending (order_by=price&order=ASC)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books?order_by=price&order=ASC",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"],
+              "query": [
+                { "key": "order_by", "value": "price" },
+                { "key": "order", "value": "ASC" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "5. Sort Books Descending (order_by=price&order=DESC)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books?order_by=price&order=DESC",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"],
+              "query": [
+                { "key": "order_by", "value": "price" },
+                { "key": "order", "value": "DESC" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "6. Limit Records (limit=5)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books?limit=5",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"],
+              "query": [
+                { "key": "limit", "value": "5" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "7. Offset Records (limit=5&offset=5)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books?limit=5&offset=5",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"],
+              "query": [
+                { "key": "limit", "value": "5" },
+                { "key": "offset", "value": "5" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "8. Minimum Price Filter (min_price=200)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books?min_price=200",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"],
+              "query": [
+                { "key": "min_price", "value": "200" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "9. Maximum Price Filter (max_price=500)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books?max_price=500",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"],
+              "query": [
+                { "key": "max_price", "value": "500" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "10. Price Range Filter (min_price=200&max_price=500)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books?min_price=200&max_price=500",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"],
+              "query": [
+                { "key": "min_price", "value": "200" },
+                { "key": "max_price", "value": "500" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "11. Create a Book (POST /books)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Node.js Basics\",\n  \"author\": \"John Smith\",\n  \"price\": 450\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/books",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"]
+            }
+          }
+        },
+        {
+          "name": "12. Update a Book (PUT /books/1)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"The Pragmatic Programmer (20th Anniversary Edition)\",\n  \"author\": \"Andrew Hunt and David Thomas\",\n  \"price\": 599.99\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/books/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books", "1"]
+            }
+          }
+        },
+        {
+          "name": "13. Delete a Book (DELETE /books/1)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Failure & Edge Cases (Status 400 & 404)",
+      "item": [
+        {
+          "name": "F1. Missing Title in POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"author\": \"John Smith\",\n  \"price\": 450\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/books",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"]
+            }
+          }
+        },
+        {
+          "name": "F2. Missing Author in POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Node.js Basics\",\n  \"price\": 450\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/books",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"]
+            }
+          }
+        },
+        {
+          "name": "F3. Invalid Price String in POST",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Test Book\",\n  \"author\": \"Test Author\",\n  \"price\": \"abc\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/books",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"]
+            }
+          }
+        },
+        {
+          "name": "F4. Non-Existing Book (GET /books/9999)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books/9999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books", "9999"]
+            }
+          }
+        },
+        {
+          "name": "F5. Update Non-Existing Book (PUT /books/9999)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Ghost Book\",\n  \"author\": \"Nobody\",\n  \"price\": 100\n}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/books/9999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books", "9999"]
+            }
+          }
+        },
+        {
+          "name": "F6. Delete Non-Existing Book (DELETE /books/9999)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books/9999",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books", "9999"]
+            }
+          }
+        },
+        {
+          "name": "F7. Invalid Order Direction (order=INVALID)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books?order=INVALID",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"],
+              "query": [
+                { "key": "order", "value": "INVALID" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "F8. Invalid Order By Column (order_by=invalid_column)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books?order_by=invalid_column",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"],
+              "query": [
+                { "key": "order_by", "value": "invalid_column" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "F9. Invalid Limit (limit=-5)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:3000/books?limit=-5",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["books"],
+              "query": [
+                { "key": "limit", "value": "-5" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
