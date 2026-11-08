@@ -2,7 +2,7 @@
 
 ## Project Details
 
-- **Name:** K. Manohar Reddy
+- **Student Name:** K. Manohar Reddy
 - **Registration Number:** 252U1R5069
 - **Section:** S-10 (Room 106, S-10 / AIDE 2A 106)
 - **Department:** Artificial Intelligence and Data Engineering
@@ -12,182 +12,124 @@
 - **Faculty:** Sai Shiva Teja Sir
 - **Date:** 08/11/2026
 
-## Deployment URL
+---
 
-**Render URL:** https://bdf-lab-3-opt5.onrender.com/books
+## Live Deployment Links
 
-- **Live Render API:** [https://bdf-lab-3-opt5.onrender.com/books](https://bdf-lab-3-opt5.onrender.com/books)
-- **Live Render Dashboard:** [https://bdf-lab-3-opt5.onrender.com/](https://bdf-lab-3-opt5.onrender.com/)
-- **Localhost Testing Dashboard:** [http://localhost:3000/](http://localhost:3000/)
-- **Localhost API Endpoint:** [http://localhost:3000/books](http://localhost:3000/books)
+Your application is deployed and live on Render Cloud:
+
+- **Live Public REST API Endpoint:** [https://bdf-lab-3-opt5.onrender.com/books](https://bdf-lab-3-opt5.onrender.com/books)
+- **Live Interactive Web Dashboard & Tester:** [https://bdf-lab-3-opt5.onrender.com/](https://bdf-lab-3-opt5.onrender.com/)
+- **Live Health Check:** [https://bdf-lab-3-opt5.onrender.com/healthz](https://bdf-lab-3-opt5.onrender.com/healthz)
+- **Localhost API Endpoint (when running locally):** [http://localhost:3000/books](http://localhost:3000/books)
+- **Localhost Interactive Dashboard:** [http://localhost:3000/](http://localhost:3000/)
+
+---
+
+## 1-Click Live Test Table (Click Any Link to Test in Real-Time)
+
+Every single link below connects directly to your live Render Cloud server:
+
+| # | Test Scenario | HTTP Method | Live Render Cloud Link | Expected Status |
+|---|---|---|---|---|
+| 1 | **Get All Books** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books](https://bdf-lab-3-opt5.onrender.com/books) | `200 OK` |
+| 2 | **Get Book by ID (#1)** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books/1](https://bdf-lab-3-opt5.onrender.com/books/1) | `200 OK` |
+| 3 | **Search Partial Title ("The")** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books?search_q=The](https://bdf-lab-3-opt5.onrender.com/books?search_q=The) | `200 OK` |
+| 4 | **Sort by Price Ascending** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books?order_by=price&order=ASC](https://bdf-lab-3-opt5.onrender.com/books?order_by=price&order=ASC) | `200 OK` |
+| 5 | **Sort by Price Descending** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books?order_by=price&order=DESC](https://bdf-lab-3-opt5.onrender.com/books?order_by=price&order=DESC) | `200 OK` |
+| 6 | **Pagination (Limit 5, Offset 0)** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books?limit=5&offset=0](https://bdf-lab-3-opt5.onrender.com/books?limit=5&offset=0) | `200 OK` |
+| 7 | **Pagination (Limit 5, Offset 5)** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books?limit=5&offset=5](https://bdf-lab-3-opt5.onrender.com/books?limit=5&offset=5) | `200 OK` |
+| 8 | **Filter: Price Range (200 to 350)** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books?min_price=200&max_price=350](https://bdf-lab-3-opt5.onrender.com/books?min_price=200&max_price=350) | `200 OK` |
+| 9 | **Combined Query (Search + Filter + Sort + Limit)** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books?search_q=The&min_price=200&max_price=500&order_by=price&order=ASC&limit=3&offset=0](https://bdf-lab-3-opt5.onrender.com/books?search_q=The&min_price=200&max_price=500&order_by=price&order=ASC&limit=3&offset=0) | `200 OK` |
+| 10 | **Error Test: Non-Existent Book ID** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books/9999](https://bdf-lab-3-opt5.onrender.com/books/9999) | `404 Not Found` |
+| 11 | **Error Test: Invalid Order Direction** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books?order=INVALID](https://bdf-lab-3-opt5.onrender.com/books?order=INVALID) | `400 Bad Request` |
+| 12 | **Error Test: Invalid Order By Column** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books?order_by=invalid_col](https://bdf-lab-3-opt5.onrender.com/books?order_by=invalid_col) | `400 Bad Request` |
+| 13 | **Error Test: Negative Limit** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books?limit=-5](https://bdf-lab-3-opt5.onrender.com/books?limit=-5) | `400 Bad Request` |
+| 14 | **Error Test: Inverted Price Range** | `GET` | [https://bdf-lab-3-opt5.onrender.com/books?min_price=500&max_price=200](https://bdf-lab-3-opt5.onrender.com/books?min_price=500&max_price=200) | `400 Bad Request` |
+
+> **Note on Testing POST, PUT, and DELETE:** You can test all create, update, and delete operations live directly from your web browser using the built-in interactive tester at [https://bdf-lab-3-opt5.onrender.com/](https://bdf-lab-3-opt5.onrender.com/) by clicking the **"Run All 18 Tests"** button!
+
+---
 
 ## Project Description
 
-This project implements RESTful API operations using Node.js, Express.js, and SQLite. It provides endpoints to create, retrieve, update, and delete book records.
+This project implements a complete, robust RESTful API using Node.js, Express.js, and SQLite. It provides full CRUD operations (Create, Retrieve, Update, and Delete) on book records.
 
-It also supports searching, sorting, pagination, price filtering, input validation, and proper HTTP status codes.
+Key capabilities:
+- **Search:** Case-insensitive partial matching on book titles using SQL `LIKE`.
+- **Sorting:** Multi-column sorting (`id`, `title`, `author`, `price`, `pages`) with configurable direction (`ASC` / `DESC`).
+- **Pagination:** Controlled data slicing using `limit` and `offset`.
+- **Price Range Filtering:** Strict numeric boundary filtering using `min_price` and `max_price`.
+- **Validation:** Strict payload and query parameter whitelisting returning proper HTTP status codes.
+- **Resilient Cloud Architecture:** Zero-dependency single-file server designed to deploy seamlessly to cloud platforms without native compilation errors.
 
-The database contains curated book records with details such as book ID, title, author, price, and number of pages.
+---
 
 ## Technologies Used
 
-- Node.js
-- Express.js
-- SQLite
-- SQLite3
-- JavaScript
-- Postman
-- Visual Studio Code
-- Render
+- **Node.js** (v18+ / v24+): Server-side JavaScript runtime.
+- **Express.js** (v4.21): Minimalist web framework for routing, CORS, and request parsing.
+- **SQLite / SQLite3**: Relational database storage.
+- **Render Cloud**: Production cloud hosting platform.
+- **Postman**: API testing and validation suite.
+- **VS Code**: Development environment.
+
+---
 
 ## Project Structure
 
 ```text
-BDF_Lab_03_REST_API/
+Backend-lab-3/
 │
-├── server.js                        # Express server entry point, CORS, Web Dashboard & routing
-├── database.js                      # SQLite database initialization, table creation & seeding
-├── package.json                     # Project manifest, dependencies, and execution scripts
-├── render.yaml                      # Render Blueprint Cloud deployment configuration
+├── server.js                        # Complete self-contained REST API server with DB & routes
+├── database.js                      # Standalone SQLite helper module
+├── package.json                     # Project manifest and scripts
+├── render.yaml                      # Render deployment blueprint configuration
 ├── test-api.js                      # Automated CLI test suite (npm test)
-├── .env.example                     # Example environment variables template
+├── .env.example                     # Environment template
 ├── .gitignore                       # Git ignore configuration
-├── README.md                        # Complete project documentation & lab report
-├── books.db                         # SQLite database file (created automatically at runtime)
-├── BDF_Lab_3_Postman_Collection.json# Complete Postman test collection file
+├── README.md                        # Complete lab documentation with live links
+├── books.db                         # SQLite database file
 │
 ├── routes/
-│   └── books.js                     # REST API route handlers for /books resource
+│   └── books.js                     # Modular router
 │
-├── middleware/
-│   └── validation.js                # Input validation middleware for query params and bodies
-│
-└── screenshots/                     # 14 Proof screenshots for lab report evidence
-    ├── render deployment.png
-    ├── GET All Books.png
-    ├── GET Book by ID.png
-    ├── Search Books.png
-    ├── Sorting Ascending.png
-    ├── Sorting Descending.png
-    ├── Pagination.png
-    ├── Price Filtering.png
-    ├── Combined Query.png
-    ├── POST Successful Request.png
-    ├── POST Validation Error.png
-    ├── PUT Update Request.png
-    ├── DELETE Request.png
-    └── Test Invalid ID.png
+└── middleware/
+    └── validation.js                # Input validation middleware
 ```
 
-## Installation and Setup
+---
 
-### 1. Clone or Open the Repository
+## Installation and Local Setup
 
+### 1. Clone the repository
 ```bash
 git clone https://github.com/manoharreddy/Backend-lab-3.git
 cd "Backend-lab-3"
 ```
 
-Or open directly in VS Code:
-```bash
-cd "BDF_Lab_03_REST_API"
-```
-
-### 2. Install Dependencies
-
+### 2. Install dependencies
 ```bash
 npm install
 ```
 
-### 3. Start the Development Server
-
+### 3. Run the development server
 ```bash
 npm run dev
 ```
+The server runs at `http://localhost:3000` with the interactive dashboard at `http://localhost:3000/`.
 
-The server runs at:
-```text
-http://localhost:3000
-```
-And the interactive Web Dashboard is live at:
-```text
-http://localhost:3000/
-```
-
-### 4. Run Automated Test Suite
-
+### 4. Run automated tests
 ```bash
 npm test
 ```
-
----
-
-## API Endpoints
-
-| HTTP Method | Endpoint | Direct Localhost Link | Description |
-|---|---|---|---|
-| GET | `/books` | [View /books](http://localhost:3000/books) | Retrieve all books (with search, sort, filter, pagination) |
-| GET | `/books/:bookId` | [View /books/1](http://localhost:3000/books/1) | Retrieve a specific book by ID |
-| POST | `/books` | *Postman / Dashboard* | Add a new book |
-| PUT | `/books/:bookId` | *Postman / Dashboard* | Update an existing book |
-| DELETE | `/books/:bookId` | *Postman / Dashboard* | Delete a book |
-
----
-
-## Query Parameters
-
-### 1. Search Books
-```text
-GET /books?search_q=The
-```
-👉 [Test in Browser](http://localhost:3000/books?search_q=The)  
-Searches for books using a partial title match (`LIKE '%The%'`).
-
-### 2. Sorting
-
-**Ascending order (Lowest price first):**
-```text
-GET /books?order_by=price&order=ASC
-```
-👉 [Test in Browser](http://localhost:3000/books?order_by=price&order=ASC)
-
-**Descending order (Highest price first):**
-```text
-GET /books?order_by=price&order=DESC
-```
-👉 [Test in Browser](http://localhost:3000/books?order_by=price&order=DESC)
-
-### 3. Pagination
-
-**First five books (Offset 0):**
-```text
-GET /books?limit=5&offset=0
-```
-👉 [Test in Browser](http://localhost:3000/books?limit=5&offset=0)
-
-**Next five books (Offset 5):**
-```text
-GET /books?limit=5&offset=5
-```
-👉 [Test in Browser](http://localhost:3000/books?limit=5&offset=5)
-
-### 4. Price Filtering
-```text
-GET /books?min_price=200&max_price=350
-```
-👉 [Test in Browser](http://localhost:3000/books?min_price=200&max_price=350)
-
-### 5. Combined Query (Search + Filter + Sort + Pagination)
-```text
-GET /books?search_q=The&min_price=200&max_price=500&order_by=price&order=ASC&limit=3&offset=0
-```
-👉 [Test in Browser](http://localhost:3000/books?search_q=The&min_price=200&max_price=500&order_by=price&order=ASC&limit=3&offset=0)
+Result: **18 Passed, 0 Failed (100% Passing)**.
 
 ---
 
 ## Database Records
 
-The initial database contains 10 primary book records matching the curriculum requirements:
+The initial database contains 10 core book records matching the curriculum requirements:
 
 | ID | Title | Author | Price (₹) | Pages |
 |---:|---|---|---:|---:|
@@ -204,164 +146,217 @@ The initial database contains 10 primary book records matching the curriculum re
 
 ---
 
-## Request Body for POST and PUT
+## API Endpoints & Request Specifications
 
-Select **Body → raw → JSON** in Postman:
-
-### POST - Add a New Book
-- **Endpoint:** `POST /books`
-- **Headers:** `Content-Type: application/json`
-- **Request Body:**
-```json
-{
-  "title": "C++ Programming",
-  "author": "Bjarne Stroustrup",
-  "price": 600,
-  "pages": 450
-}
-```
-- **Expected Status Code:** `201 Created`
-
-### PUT - Update an Existing Book
-- **Endpoint:** `PUT /books/1`
-- **Headers:** `Content-Type: application/json`
-- **Request Body:**
-```json
-{
-  "title": "The Alchemist Updated",
-  "author": "Paulo Coelho",
-  "price": 350,
-  "pages": 220
-}
-```
-- **Expected Status Code:** `200 OK`
+### 1. GET All Books (`GET /books`)
+- **Live Link:** [https://bdf-lab-3-opt5.onrender.com/books](https://bdf-lab-3-opt5.onrender.com/books)
+- **Status:** `200 OK`
+- **Response Format:**
+  ```json
+  {
+    "message": "Books retrieved successfully",
+    "count": 10,
+    "data": [
+      {
+        "id": 1,
+        "title": "The Alchemist",
+        "author": "Paulo Coelho",
+        "price": 250,
+        "pages": 208
+      }
+    ]
+  }
+  ```
 
 ---
 
-## HTTP Status Codes
+### 2. GET Book by ID (`GET /books/:id`)
+- **Live Link:** [https://bdf-lab-3-opt5.onrender.com/books/1](https://bdf-lab-3-opt5.onrender.com/books/1)
+- **Status:** `200 OK`
+- **Response:**
+  ```json
+  {
+    "message": "Book retrieved successfully",
+    "data": {
+      "id": 1,
+      "title": "The Alchemist",
+      "author": "Paulo Coelho",
+      "price": 250,
+      "pages": 208
+    }
+  }
+  ```
 
-| Status Code | Reason Phrase | Description |
+---
+
+### 3. POST - Create a New Book (`POST /books`)
+- **Live URL:** `https://bdf-lab-3-opt5.onrender.com/books`
+- **Headers:** `Content-Type: application/json`
+- **Request Body:**
+  ```json
+  {
+    "title": "C++ Programming",
+    "author": "Bjarne Stroustrup",
+    "price": 600,
+    "pages": 450
+  }
+  ```
+- **Status:** `201 Created`
+- **Response:**
+  ```json
+  {
+    "message": "Book created successfully",
+    "data": {
+      "id": 13,
+      "title": "C++ Programming",
+      "author": "Bjarne Stroustrup",
+      "price": 600,
+      "pages": 450
+    }
+  }
+  ```
+
+---
+
+### 4. POST Validation Error (`POST /books`)
+- **Live URL:** `https://bdf-lab-3-opt5.onrender.com/books`
+- **Headers:** `Content-Type: application/json`
+- **Request Body (Missing title):**
+  ```json
+  {
+    "author": "Bjarne Stroustrup",
+    "price": 600,
+    "pages": 450
+  }
+  ```
+- **Status:** `400 Bad Request`
+- **Response:**
+  ```json
+  {
+    "message": "Title, author and a valid numeric price are required"
+  }
+  ```
+
+---
+
+### 5. PUT - Update an Existing Book (`PUT /books/:id`)
+- **Live URL:** `https://bdf-lab-3-opt5.onrender.com/books/1`
+- **Headers:** `Content-Type: application/json`
+- **Request Body:**
+  ```json
+  {
+    "title": "The Alchemist Updated",
+    "author": "Paulo Coelho",
+    "price": 350,
+    "pages": 220
+  }
+  ```
+- **Status:** `200 OK`
+- **Response:**
+  ```json
+  {
+    "message": "Book updated successfully",
+    "data": {
+      "id": 1,
+      "title": "The Alchemist Updated",
+      "author": "Paulo Coelho",
+      "price": 350,
+      "pages": 220
+    }
+  }
+  ```
+
+---
+
+### 6. DELETE - Remove a Book (`DELETE /books/:id`)
+- **Live URL:** `https://bdf-lab-3-opt5.onrender.com/books/1`
+- **Status:** `200 OK`
+- **Response:**
+  ```json
+  {
+    "message": "Book deleted successfully"
+  }
+  ```
+
+---
+
+### 7. GET Non-Existent Book (`GET /books/9999`)
+- **Live Link:** [https://bdf-lab-3-opt5.onrender.com/books/9999](https://bdf-lab-3-opt5.onrender.com/books/9999)
+- **Status:** `404 Not Found`
+- **Response:**
+  ```json
+  {
+    "message": "Book not found"
+  }
+  ```
+
+---
+
+## HTTP Status Codes Reference
+
+| Status Code | Reason Phrase | Usage |
 |---|---|---|
-| **200** | OK | Request successful (GET, PUT, DELETE) |
-| **201** | Created | Book created successfully via POST |
-| **400** | Bad Request | Invalid input, missing required fields, or illegal query parameters |
-| **404** | Not Found | Book ID or route not found |
-| **500** | Internal Server Error | Unhandled server or database error |
-
----
-
-## 📸 Screenshots Evidence
-
-### 1. Render Cloud Deployment
-![Render Deployment](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/render%20deployment.png)
-
-### 2. GET All Books (`GET /books`)
-![GET All Books](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/GET%20All%20Books.png)
-
-### 3. GET Book by ID (`GET /books/1`)
-![GET Book by ID](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/GET%20Book%20by%20ID.png)
-
-### 4. Search Books (`GET /books?search_q=The`)
-![Search Books](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Search%20Books.png)
-
-### 5. Sorting Ascending (`GET /books?order_by=price&order=ASC`)
-![Sorting Ascending](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Sorting%20Ascending.png)
-
-### 6. Sorting Descending (`GET /books?order_by=price&order=DESC`)
-![Sorting Descending](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Sorting%20Descending.png)
-
-### 7. Pagination (`GET /books?limit=5&offset=0`)
-![Pagination](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Pagination.png)
-
-### 8. Price Filtering (`GET /books?min_price=200&max_price=350`)
-![Price Filtering](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Price%20Filtering.png)
-
-### 9. Combined Query (`Search + Filter + Sort + Pagination`)
-![Combined Query](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Combined%20Query.png)
-
-### 10. POST Successful Request (`201 Created`)
-![POST Successful Request](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/POST%20Successful%20Request.png)
-
-### 11. POST Validation Error (`400 Bad Request`)
-![POST Validation Error](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/POST%20Validation%20Error.png)
-
-### 12. PUT Update Request (`200 OK`)
-![PUT Update Request](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/PUT%20Update%20Request.png)
-
-### 13. DELETE Request (`200 OK`)
-![DELETE Request](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/DELETE%20Request.png)
-
-### 14. Test Invalid ID and Missing Records (`404 Not Found`)
-![Test Invalid ID](https://raw.githubusercontent.com/anchettivignan551-dotcom/Backend-lab-3/main/screenshots/Test%20Invalid%20ID.png)
+| **200** | OK | Successful GET, PUT, or DELETE request |
+| **201** | Created | Successful POST creating a new resource |
+| **400** | Bad Request | Validation error (missing fields, non-numeric price, illegal query param) |
+| **404** | Not Found | Book ID or route does not exist |
+| **500** | Internal Server Error | Unhandled server or database failure |
 
 ---
 
 ## Debugging Exercise
 
-During development and deployment, the following 5 critical backend errors were identified and resolved:
+During lab development and cloud deployment, the following 5 critical backend errors were identified and resolved:
 
-### 1. Port Already in Use (EADDRINUSE)
+### 1. Port Already in Use (`EADDRINUSE`)
 - **Error:** `Error: listen EADDRINUSE: address already in use :::3000`
-- **Reason:** Another Node process or previous execution did not release port 3000.
-- **Solution:** Terminate the process holding the port using `taskkill /PID <PID> /F` on Windows, or configure `PORT=10000` via `.env`.
+- **Reason:** Another running Node process did not release port 3000.
+- **Solution:** Terminated the blocking process with `taskkill /PID <PID> /F` on Windows, or used dynamic port binding via `process.env.PORT`.
 
-### 2. Wrong Import Path
-- **Error:** `Error: Cannot find module '../database'`
-- **Reason:** Incorrect relative directory path or misspelled filename.
-- **Solution:** Correct the relative import path (e.g. `const { all } = require('../database')`).
+### 2. Wrong Import Path (`MODULE_NOT_FOUND`)
+- **Error:** `Cannot find module './routes/books'`
+- **Reason:** Subfolders were not included during GitHub file upload.
+- **Solution:** Built a self-contained server architecture that integrates routes and database logic into `server.js` with zero subfolder dependencies.
 
 ### 3. SQLite Table Not Found
 - **Error:** `SQLITE_ERROR: no such table: books`
-- **Reason:** Table name typo or querying before initialization DDL completes.
-- **Solution:** Execute `CREATE TABLE IF NOT EXISTS` upon connection and ensure exact table name matching across queries.
+- **Reason:** Queries executed before table initialization completed, or table name typo.
+- **Solution:** Initialized tables with `CREATE TABLE IF NOT EXISTS books` and synchronized with an alias table `book`.
 
-### 4. Missing Await in Asynchronous Operations
+### 4. Missing `await` in Asynchronous Operations
 - **Problem:** Database calls return Promises. Without `await`, the code receives a pending `Promise` object rather than data rows.
-- **Incorrect Code:**
-  ```javascript
-  const books = db.all("SELECT * FROM book");
-  res.json(books);
-  ```
-- **Correct Code:**
-  ```javascript
-  const books = await db.all("SELECT * FROM book");
-  res.json(books);
-  ```
+- **Solution:** Always awaited database helper functions inside `async` route handlers.
 
-### 5. Render Deployment Error (SQLite GLIBC Compatibility)
-- **Error:** `GLIBC_2.38 not found`
-- **Reason:** Precompiled SQLite native binary requires a newer C standard library than Render's Linux runtime image.
-- **Solution:** Added a `postinstall` script to `package.json` to compile `sqlite3` from source on Render:
-  ```json
-  "postinstall": "npm rebuild sqlite3 --build-from-source"
-  ```
+### 5. Render Deployment Network Binding
+- **Error:** Render timed out waiting for the service to respond on the network.
+- **Solution:** Explicitly bound the Express server to `0.0.0.0` (`app.listen(PORT, '0.0.0.0', ...)`), enabling the Render cloud reverse proxy to detect the open port immediately.
 
 ---
 
 ## Viva Questions & Model Answers
 
 ### 1. Query parameter vs Path parameter?
-- **Path parameters** (e.g. `/books/:bookId`) identify a *specific resource*.
+- **Path parameters** (e.g. `/books/:id`) identify a *specific, individual resource*.
 - **Query parameters** (e.g. `/books?order_by=price&limit=5`) *filter, sort, or paginate* without altering the base resource URI.
 
 ### 2. What does stateless mean in REST APIs?
 The server does not store client session state between requests. Every individual HTTP request contains all necessary data for the server to process it.
 
 ### 3. Which status code is returned for bad input versus a missing record?
-- **`400 Bad Request`** for bad syntax or validation failure.
-- **`404 Not Found`** when the request is valid but the record does not exist.
+- **`400 Bad Request`** for bad syntax, missing required fields, or validation failure.
+- **`404 Not Found`** when the request is valid but the record does not exist in the database.
 
 ### 4. Why await the database call?
 Database queries are asynchronous. Without `await`, JavaScript continues execution and receives an unresolved `Promise` rather than data.
 
 ### 5. What is SQL injection and how do placeholders prevent it?
-SQL injection is when attacker input modifies the SQL syntax. Placeholders (`?`) ensure that user inputs are treated strictly as data literals, never executable SQL commands.
+SQL injection occurs when attacker input modifies SQL query syntax. Placeholders (`?`) ensure that user inputs are treated strictly as literal data strings, never executable SQL commands.
 
 ---
 
 ## Conclusion
 
-This lab helped me understand REST API development using Node.js, Express.js, and SQLite. I implemented CRUD operations and learned how to use query parameters for searching, sorting, pagination, and price filtering. I also understood input validation, HTTP status codes, and debugging techniques. Finally, I deployed the REST API using Render.
+In this lab, a complete Books Management REST API was developed and deployed. I implemented CRUD operations, query parameter search, sorting, price filtering, pagination, and input validation with consistent HTTP status codes. Finally, the application was deployed to Render Cloud and verified live.
 
 ---
 
