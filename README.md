@@ -251,7 +251,8 @@ Select **Body → raw → JSON** in Postman:
 ## 📸 Screenshots Evidence
 
 ### 1. Render Cloud Deployment
-![Render Deployment](screenshots/render%20deployment.png)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/049dbe47-2dd3-4895-bbce-07780d542a41" />
+
 
 ### 2. GET All Books (`GET /books`)
 ![GET All Books](screenshots/GET%20All%20Books.png)
